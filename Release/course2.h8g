@@ -1,0 +1,4 @@
+-cpu=300HA:24
+-output="C:\WorkSpace\course2\course2\Release\course2.lib"
+-head=runtime,new,stdio,stdlib,string
+-lang=c

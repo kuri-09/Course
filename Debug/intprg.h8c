@@ -1,0 +1,9 @@
+-cpu=300HA:24
+-lang=c
+-object="C:\WorkSpace\course2\course2\Debug\intprg.obj"
+-outcode=sjis
+-debug
+-nolist
+-chgincpath
+"C:\WorkSpace\course2\course2\intprg.c"
+-nologo

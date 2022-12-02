@@ -1,0 +1,8 @@
+"C:\WorkSpace\course2\course2\lowlvl.src"
+-cpu=300HA:24
+-nodebug
+-object="C:\WorkSpace\course2\course2\Release\lowlvl.obj"
+-nolist
+-nologo
+-chgincpath
+-errorpath

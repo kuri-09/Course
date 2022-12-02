@@ -1,0 +1,9 @@
+-cpu=300HA:24
+-lang=c
+-object="C:\WorkSpace\course2\course2\Debug\KettleSystem.obj"
+-outcode=sjis
+-debug
+-nolist
+-chgincpath
+"C:\workspace\course2\course2\KettleSystem.c"
+-nologo

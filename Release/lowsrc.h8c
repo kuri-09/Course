@@ -1,0 +1,8 @@
+-cpu=300HA:24
+-lang=c
+-object="C:\WorkSpace\course2\course2\Release\lowsrc.obj"
+-outcode=sjis
+-nolist
+-chgincpath
+"C:\WorkSpace\course2\course2\lowsrc.c"
+-nologo
