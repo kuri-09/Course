@@ -52,12 +52,14 @@
 [WINDOW_POSITION_STATE_DATA_VD3]
 [WINDOW_POSITION_STATE_DATA_VD4]
 [WINDOW_Z_ORDER]
-"C:\workspace\course2\course2\ExternalInterrupt.c" 
-"C:\workspace\course2\course2\Manager.c" 
-"C:\workspace\course2\course2\Cover.c" 
-"C:\workspace\course2\course2\WaterLevel.c" 
 "C:\workspace\course2\course2\InternalInterrupt.c" 
+"C:\workspace\course2\course2\ExternalInterrupt.c" 
+"C:\workspace\course2\course2\Cover.c" 
+"C:\workspace\course2\course2\Manager.c" 
+"C:\workspace\course2\course2\Display.c" 
+"C:\workspace\course2\course2\WaterLevel.c" 
 "C:\workspace\course2\course2\KettleSystem.c" 
+"C:\workspace\course2\course2\TempDisplay.c" 
 "C:\workspace\course2\course2\KettleSystem.h" 
 [TARGET_NAME]
 "" "" 942869062 

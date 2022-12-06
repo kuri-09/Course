@@ -24,7 +24,10 @@ void design_display_temp(int watert_temp)
 	int ten = (watert_temp / 10) % 10;
 	int one  = (watert_temp / 1) % 10;
 	
+	
 	sprintf(str,"%d", watert_temp);
+	
+	
 	data_len = strlen(str);
 	
 	digit[2] = hundred;

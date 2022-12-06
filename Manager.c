@@ -13,8 +13,7 @@ void Manager_interrupt(int flag_type, unsigned char btn_state, int water_lv, int
 	static int cover_s;
 	btn btn_type;
 	
-	
-	
+
 	//タイマ割り込み：時間表示
 	if(flag_type == show_timer){
 		

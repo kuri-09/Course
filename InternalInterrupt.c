@@ -28,24 +28,27 @@ void isr_imia1(){
 		flag_type = show_timer;
 		Manager_interrupt(flag_type, 0, 0, 0);
 		
-		if(cnt == 80){
+		if((cnt%100) == 0){
 			
 			//ƒ{ƒ^ƒ“‚Ìó‘Ô“Ç‚İ‚İ
 			flag_type = button;
 			btn_state = Button_get_botan_state();
 			Manager_interrupt(flag_type, btn_state, 0, 0);
 			
-			//…ˆÊ‚Ìó‘Ô“Ç‚İ‚İ
-			flag_type = water_level;
-			water_lv = WaterLevel_get_water_level();
-			Manager_interrupt(flag_type, 0, water_lv, 0);
-			
 			//‚Ó‚½‚Ìó‘Ô“Ç‚İ‚İ
 			flag_type = cover;
 			cover_state = Cover_get_cover_state();
 			Manager_interrupt(flag_type, 0, 0, cover_state);
 			
-			cnt = 0;
+			if(cnt == 1000){
+				
+				//…ˆÊ‚Ìó‘Ô“Ç‚İ‚İ
+				flag_type = water_level;
+				water_lv = WaterLevel_get_water_level();
+				Manager_interrupt(flag_type, 0, water_lv, 0);
+				
+				cnt = 0;
+			}
 		}
 	}
 	
