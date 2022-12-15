@@ -1,99 +1,186 @@
 /*Manager.c*/
 
 #include "KettleSystem.h"
+#include "iodefine.h"
 
 #define MINUTE 6000
 #define SECOND 100
 
-void Manager_interrupt(int flag_type, unsigned char btn_state, int water_lv, int cover_state){
-	
-	static int r_time;
-	static int water;
-	static int cnt_interrupt;
-	static int cover_s;
-	btn btn_type;
-	
+/*グローバル変数*/
+heat heat_state;
+int time_out;
 
-	//タイマ割り込み：時間表示
-	if(flag_type == show_timer){
-		
-		RTimeDisp_show_remaining_time(r_time);
+/*extern*/
+extern int remaining_time = 0;
+extern int temp;
+
+void Manager_interrupt(unsigned char button_state, int water_level, int cover_state){
+	
+	btn btn_type;
+	int i = 0;
+	static int boillamp_state;
+	static int keeplamp_state;
+	static int locklamp_state;
+	static int cnt_interrupt;
+	static int buzzer_type;
+	unsigned char pb_state = 0x00;
 	
 	
-	//タイマ割り込み：ボタン
-	}else if(flag_type == button){
-		
-		//btn_type = unlock;
-		if((btn_state & 0x01) == 0x01){
-			Lock_Lamp_turn_on_lamp();
-		}else{
-			Lock_Lamp_turn_off_lamp();
-		}
-		
-		//btn_type = boil;
-		if((btn_state & 0x02) == 0x02){	
-			Boil_Lamp_turn_on_lamp();
-		}else{
-			Boil_Lamp_turn_off_lamp();
-		}
-		
-		//btn_type = supply_water;
-		if((btn_state & 0x04) == 0x04){
-			if(water != 0)
-			    water = water - 1;
-			WaterLevelMeter_show_water_level(water);
-		}
-		
-		//btn_type = timer;
-		if((btn_state & 0x08) == 0x08){
-			if(r_time != 60)
-			    r_time += 1;
-		    RTimeDisp_show_remaining_time(r_time);
-		}
-		
-		//btn_type = set_keep_mode;
-		if((btn_state & 0x10) == 0x10){
-			Keep_Lamp_turn_on_lamp();
-		}else{
-			Keep_Lamp_turn_off_lamp();
-		}
-	
-	
-	//タイマ割り込み：水位
-	}else if(flag_type == water_level){
-		
-		//開いているとき
-		if(cover_s == 0){
-			water = water_lv;
-			WaterLevelMeter_show_water_level(water);
-		}
-	
-	
-	//タイマ割り込み：ふた
-	}else if(flag_type == cover){
-		
-		cover_s = cover_state;
-		
-		//閉まっているとき
-		if(cover_s == 1){
-			Boil_Lamp_turn_on_lamp();
-			Keep_Lamp_turn_on_lamp();
-			Lock_Lamp_turn_on_lamp();
-		}
-		
+	if(buzzer_type != -1){
+		Buzzer_turn_off();
+		Buzzer_turn_off_enable();
+		buzzer_type = -1;
 	}
 	
-	cnt_interrupt++;
+	if(temp > 100){
+		DA.DADR0 = 0x00;
+	}
 	
-	if(cnt_interrupt % (1 * SECOND) == 0){
-			
-		if(r_time != 0){
-			r_time -= 1;
+	/*タイマ割り込み：タイマ*/
+	
+	if(time_out != 0){
+		if(cnt_interrupt != 0){
+			//ブザー：on
+			Buzzer_turn_on_enable();
+			Buzzer_turn_on();
+			buzzer_type = show_timer;
 		}
-		 
-		if(cnt_interrupt == (1 * MINUTE)){
-			cnt_interrupt = 0;
-		}
-		 
+		time_out = 0;
+	}
+
+
+	/*タイマ割り込み：ボタン*/
+	
+	//btn_type = unlock;
+	if((button_state & 0x01) == 0x01 && locklamp_state == 0){
+		
+		//ランプ:on
+		Lock_Lamp_turn_on_lamp();
+		locklamp_state = 1;
+		
+		//ブザー：on
+		Buzzer_turn_on_enable();
+		Buzzer_turn_on();
+		buzzer_type = unlock;
+		
+		//I/OポートB
+		pb_state += 0x40; 
+	
+	}else if((button_state & 0x01) == 0x01 && locklamp_state == 1){
+		
+		//I/OポートB
+		pb_state += 0x40;
+		
+	}else{
+		
+		//ランプ:off
+		Lock_Lamp_turn_off_lamp();
+		locklamp_state = 0;
+ 
+	}
+	
+	
+	//btn_type = boil;
+	if((button_state & 0x02) == 0x02 && boillamp_state == 0){
+		
+		//ランプ:on
+		Boil_Lamp_turn_on_lamp();
+		boillamp_state = 1;
+		
+		//ブザー：on
+		Buzzer_turn_on_enable();
+		Buzzer_turn_on();
+		buzzer_type = boil;
+		
+		//ヒータ　→　boil
+		heat_state = boiling;
+		
+		//I/OポートB
+		pb_state += 0x10; 
+	
+	}else if((button_state & 0x02) == 0x02 && boillamp_state == 1){
+		
+		//I/OポートB
+		pb_state += 0x10; 
+		
+	}else{
+		
+		//ランプ:off
+		Boil_Lamp_turn_off_lamp();
+		boillamp_state = 0;
+
+	}		
+		
+		
+	//btn_type = supply_water;
+	if((button_state & 0x04) == 0x04){
+		
+		//給水
+		DA.DADR1 = 0xff;
+		//DA.DACR.BIT.DAOE1 = 1;
+		
+	}else{
+		
+		//給水中止
+		DA.DADR1 = 0x00;
+		//DA.DACR.BIT.DAOE1 = 1;
+	
+	}
+		
+	//btn_type = timer;
+	if((button_state & 0x08) == 0x08){
+		if(remaining_time != 60)
+		    remaining_time += 1;
+		   
+	}
+	
+	//btn_type = set_keep_mode;
+	if((button_state & 0x10) == 0x10 && keeplamp_state == 0){
+		
+		//ランプ:on
+		Keep_Lamp_turn_on_lamp();
+		keeplamp_state = 1;
+		
+		//ブザー：on
+		Buzzer_turn_on_enable();
+		Buzzer_turn_on();
+		buzzer_type = keep;
+		
+		//I/OポートB
+		pb_state += 0x20; 
+	
+	}else if((button_state & 0x10) == 0x10 && keeplamp_state == 1){
+		
+		//I/OポートB
+		pb_state += 0x20; 
+		
+	}else{
+		
+		//ランプ:off
+		Keep_Lamp_turn_off_lamp();
+		keeplamp_state = 0;
+	}
+	
+	
+	/*タイマ割り込み：水位(1000)*/
+	
+	pb_state = (pb_state | (water_level & 0x0f));
+	WaterLevelMeter_show_water_level(pb_state);
+	
+	
+	/*タイマ割り込み：ふた(100)*/
+	
+	if(cover_state == 1){//閉まっているとき
+	
+		Boil_Lamp_turn_on_lamp();
+		Keep_Lamp_turn_on_lamp();
+		Lock_Lamp_turn_on_lamp();
+	}
+	
+	/*呼び出し回数の初期化*/
+	if(cnt_interrupt < 10){
+		cnt_interrupt++;
+	}else{
+		cnt_interrupt = 1;	
 	}
 }

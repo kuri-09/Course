@@ -1,12 +1,10 @@
 //ExternalInterrupt.c
 
 #include "KettleSystem.h"
-#include "Manager.h"
-#include "Display.h"
-
 #include "iodefine.h"
 
-#include    <machine.h>
+/*externêÈåæ*/
+extern int cover_state;
 
 void isr_irq4(){
 	
@@ -14,6 +12,7 @@ void isr_irq4(){
 	static int cnt;
 	cnt++;
 	
+	cover_state = 0;
 	Boil_Lamp_turn_off_lamp();
 	Keep_Lamp_turn_off_lamp();
 	Lock_Lamp_turn_off_lamp();

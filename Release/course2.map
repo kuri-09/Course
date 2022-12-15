@@ -1,4 +1,4 @@
-Optimizing Linkage Editor (V.9.05.01.000)         06-Dec-2022 16:49:08
+Optimizing Linkage Editor (V.9.05.01.000)         16-Dec-2022 04:54:30
 
 *** Options ***
 
@@ -13,10 +13,12 @@ Optimizing Linkage Editor (V.9.05.01.000)         06-Dec-2022 16:49:08
 -nologo
 -input="C:\WorkSpace\course2\course2\Release\BoilLamp.obj"
 -input="C:\WorkSpace\course2\course2\Release\Button.obj"
+-input="C:\WorkSpace\course2\course2\Release\Buzzer.obj"
 -input="C:\WorkSpace\course2\course2\Release\Cover.obj"
 -input="C:\WorkSpace\course2\course2\Release\dbsct.obj"
 -input="C:\WorkSpace\course2\course2\Release\Display.obj"
 -input="C:\WorkSpace\course2\course2\Release\ExternalInterrupt.obj"
+-input="C:\WorkSpace\course2\course2\Release\HeaterPower.obj"
 -input="C:\WorkSpace\course2\course2\Release\hwsetup.obj"
 -input="C:\WorkSpace\course2\course2\Release\InternalInterrupt.obj"
 -input="C:\WorkSpace\course2\course2\Release\intprg.obj"
@@ -27,6 +29,7 @@ Optimizing Linkage Editor (V.9.05.01.000)         06-Dec-2022 16:49:08
 -input="C:\WorkSpace\course2\course2\Release\lowsrc.obj"
 -input="C:\WorkSpace\course2\course2\Release\Manager.obj"
 -input="C:\WorkSpace\course2\course2\Release\ModeDisplay.obj"
+-input="C:\WorkSpace\course2\course2\Release\Pump.obj"
 -input="C:\WorkSpace\course2\course2\Release\RemainingTimeDisplay.obj"
 -input="C:\WorkSpace\course2\course2\Release\resetprg.obj"
 -input="C:\WorkSpace\course2\course2\Release\sbrk.obj"
@@ -130,20 +133,20 @@ $VECT60
 PResetPRG
                                   00000400  00000421        22   2
 PIntPRG
-                                  00000422  0000049b        7a   2
+                                  00000422  000004af        8e   2
 P
-                                  00000800  00005a0f      5210   2
+                                  00000800  00005a8d      528e   2
 C
-                                  00005a10  00008cab      329c   2
+                                  00005a8e  00008d29      329c   2
 C$DSEC
-                                  00008cac  00008cb7         c   2
+                                  00008d2a  00008d35         c   2
 C$BSEC
-                                  00008cb8  00008cbf         8   2
+                                  00008d36  00008d3d         8   2
 D
-                                  00008cc0  00008cc7         8   2
+                                  00008d3e  00008d4f        12   2
 B
-                                  00ffdf10  00ffe38b       47c   2
+                                  00ffdf10  00ffe38f       480   2
 R
-                                  00ffe38c  00ffe393         8   2
+                                  00ffe390  00ffe3a1        12   2
 S
                                   00fffd00  00fffeff       200   2

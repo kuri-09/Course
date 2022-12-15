@@ -29,7 +29,7 @@ void timer_init()
 	ITU0.TCR.BIT.TPSC = 0x03;
 	ITU0.TIOR.BIT.IOA = 0;    /*3. ジェネラルレジスタの利用方法の設定*/		
 	ITU0.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/	
-	/*5. 割り込みの許可*/
+	//なし                    /*5. 割り込みの許可*/
 	
 	//7セグ
 	ITU.TSTR.BIT.STR1 = 0;    /*1. タイマカウントの停止*/  
@@ -38,17 +38,18 @@ void timer_init()
 	ITU1.TCR.BIT.TPSC = 0x03;
 	ITU1.TIOR.BIT.IOA = 0;    /*3. ジェネラルレジスタの利用方法の設定*/		
 	ITU1.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/
-	ITU1.TIER.BIT.IMIEA = 1; /*5. 割り込みの許可*/
+	ITU1.TIER.BIT.IMIEA = 1;  /*5. 割り込みの許可*/
 	
 	//ふた
-	INTC.ISCR.BIT.IRQ4SC = 1;/*1. レベルセンス／立ち下がりの選択*/
-	INTC.IER.BIT.IRQ4E = 1;/*2. 割り込みの許可*/
+	INTC.ISCR.BIT.IRQ4SC = 1; /*1. レベルセンス／立ち下がりの選択*/
+	INTC.IER.BIT.IRQ4E = 1;   /*2. 割り込みの許可*/
 	
 	//全割り込みの許可
 	set_imask_ccr(0);
 	
-	ITU.TSTR.BIT.STR1 = 1; /*6. タイマカウントの開始*/
+	ITU.TSTR.BIT.STR1 = 1;    /*6. タイマカウントの開始*/
 }
+
 
 
 /* 1 [ms] 待機関数*/ 
@@ -156,6 +157,8 @@ void reset_lcd()
 	int i=0;
 	int j=0;
 	int cs;
+	
+	//init();
 	
 	P3.DDR = 0xff;    /*ポート 3 の各ビットを必要に応じて出力に設定*/
 	P3.DR.BIT.B2 = 1; /*E を ON*/

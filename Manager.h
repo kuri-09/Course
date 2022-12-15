@@ -1,3 +1,3 @@
 /*Manager.h*/
 
-void Manager_interrupt(int flag_type, unsigned char btn_state, int water_lv, int cover_state);
+void Manager_interrupt(unsigned char button_state, int water_level, int cover_state);

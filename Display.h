@@ -1,6 +1,7 @@
 //Display.h
 
 void timer_init();
+void init();
 void wait1_ms();
 void wait_ms(int ms);
 void wait_240nsec();

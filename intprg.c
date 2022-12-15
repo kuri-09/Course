@@ -149,7 +149,11 @@ __interrupt(vect=57) void INT_RXI1(void) {/* sleep(); */}
 __interrupt(vect=58) void INT_TXI1(void) {/* sleep(); */}
 //  vector 59 TEI1
 __interrupt(vect=59) void INT_TEI1(void) {/* sleep(); */}
-//  vector 60 ADI
-__interrupt(vect=60) void INT_ADI(void) {/* sleep(); */}
+// vector 60 ADI
+// __interrupt(vect=60) void INT_ADI(void) {/* sleep(); */}
+extern void isr_adi();
+__interrupt(vect=60) void INT_ADI(void) {
+isr_adi();
+}
 
 

@@ -18,7 +18,7 @@ typedef enum{
 	
 	show_timer,
 	button,
-	water_level,
+	//water_level,
 	cover,
 	
 }flag;
@@ -33,3 +33,11 @@ typedef enum{
 	keep,
 	
 }btn;
+
+typedef enum{
+	
+	off,
+	boiling,
+	pid,
+
+}heat;
