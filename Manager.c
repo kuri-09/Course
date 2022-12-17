@@ -12,7 +12,7 @@ int time_out;
 
 /*extern*/
 extern int remaining_time = 0;
-extern int temp;
+extern unsigned long int temp;
 
 void Manager_interrupt(unsigned char button_state, int water_level, int cover_state){
 	
@@ -115,16 +115,12 @@ void Manager_interrupt(unsigned char button_state, int water_level, int cover_st
 	//btn_type = supply_water;
 	if((button_state & 0x04) == 0x04){
 		
-		//給水
-		DA.DADR1 = 0xff;
-		//DA.DACR.BIT.DAOE1 = 1;
+		Pump_drain_water();
 		
 	}else{
 		
-		//給水中止
-		DA.DADR1 = 0x00;
-		//DA.DACR.BIT.DAOE1 = 1;
-	
+		Pump_stop_drain();
+		
 	}
 		
 	//btn_type = timer;
@@ -147,7 +143,13 @@ void Manager_interrupt(unsigned char button_state, int water_level, int cover_st
 		buzzer_type = keep;
 		
 		//I/OポートB
-		pb_state += 0x20; 
+		pb_state += 0x20;
+		
+		/*沸騰の中止*/
+		DA.DADR0 = 0x00;//出力値の設定
+		HeaterPower_turn_off();
+		heat_state = off;
+		
 	
 	}else if((button_state & 0x10) == 0x10 && keeplamp_state == 1){
 		

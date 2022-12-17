@@ -2,11 +2,18 @@
 
 #include "iodefine.h"
 
-void Pump_supry_water(){
+void Pump_drain_water(){
 	
-	int dout;
-	int energy = (2000 * dout) / 256;
+	//‹‹…
+	DA.DADR1 = 0xff;
+	//DA.DACR.BIT.DAOE1 = 1;
+
+}
+
+void Pump_stop_drain(){
 	
-	DA.DADR1 = energy;
+	//‹‹…’†~
+	DA.DADR1 = 0x00;
+	//DA.DACR.BIT.DAOE1 = 1;
 
 }

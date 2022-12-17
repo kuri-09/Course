@@ -12,10 +12,11 @@ void isr_imia1();
 void isr_adi();
 
 /*extern宣言*/
-extern int temp;
+extern unsigned long int temp;
+extern unsigned long int ad_temp;
 
 
-extern int ad_temp;
+
 extern int remaining_time;
 extern int cover_state;
 extern unsigned char water_level;
@@ -56,10 +57,8 @@ void isr_imia1(){
 				isr_adi();//読み取り
 				AD.ADCSR.BIT.ADST = 1;//変換の開始
 				
-				/*-----------------------------ここから-----------------------------------*/
 				
-				//DA変換の開始
-				
+				//DA変換の開始	
 				//沸騰(目標温度 ON/OFF 方式)
 				if(heat_state == boiling){
 					if(temp < 100){
@@ -77,10 +76,6 @@ void isr_imia1(){
 					heat_state = off;
 					
 				}
-				//DA.DACR.BIT.DAOE0 = 1;//変換の開始
-				
-				
-				/*------------------------------ここまで----------------------------------*/
 				
 				//一秒カウント
 				if(remaining_time != 0){
@@ -122,6 +117,7 @@ void isr_imia1(){
 void isr_adi(){
 	
 	ad_temp = (AD.ADDRA >> 6);
+	//temp = (125 * (AD.ADDRA >> 6)) / 1024;
 	
 	//割り込みフラグのクリア
 	if(AD.ADCSR.BIT.ADF != 0){//状態のリード

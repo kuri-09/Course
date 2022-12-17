@@ -13,8 +13,10 @@
 #define SECOND 1000
 
 //グローバル変数
-int temp = 0;
-int ad_temp = 0;
+unsigned long int temp = 0x00;/*型を探せ*/
+unsigned long int ad_temp = 0x00;
+
+
 //int remaining_time = 0;
 unsigned char water_level = 0x00;
 unsigned char button_state = 0x00;
@@ -29,6 +31,7 @@ void init();
 int main(void)
 {
 	int i = 0;
+	unsigned int ad = 0;
 	const unsigned char data[] = "Keita_Igarashi";
 	int data_len = strlen(data);
 	//int test_temp;
@@ -53,10 +56,13 @@ int main(void)
 		
 		//タイマ割り込みでサンプリングした値を処理する
 		Manager_interrupt(button_state, water_level, cover_state);
-		wait_ms(100);
+
 		
-		design_number(0, 5, temp);
-			
+		/*正常動作*/
+		design_number(0, 5, ad_temp);
+		design_number(0, 6, temp);
+		design_number(0, 7, water_level);
+		
 	}
 	
     return 0;
@@ -65,9 +71,12 @@ int main(void)
 void init(){
 	
 	//AD変換
+	/*
 	AD.ADCSR.BIT.SCAN = 0;//動作モードの選択(単一)
 	AD.ADCSR.BIT.ADIE = 1;//割り込みの許可
 	AD.ADCSR.BIT.CH = 0x00;//チャンネルの選択
+	*/
+	AD.ADCSR.BYTE = 0x40;
 	
 	//DA変換
 	//ヒータ
