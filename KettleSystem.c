@@ -13,9 +13,8 @@
 #define SECOND 1000
 
 //グローバル変数
-unsigned long int temp = 0x00;/*型を探せ*/
+unsigned long int temp = 0x00;
 unsigned long int ad_temp = 0x00;
-
 
 //int remaining_time = 0;
 unsigned char water_level = 0x00;
@@ -46,7 +45,7 @@ int main(void)
 	//design_number(0, 5, 999);
 
 	//LCDに保温モードの出力
-	//design_display_mode(98);
+	design_display_mode(98);
 	
 	
 	while(1){
@@ -56,12 +55,6 @@ int main(void)
 		
 		//タイマ割り込みでサンプリングした値を処理する
 		Manager_interrupt(button_state, water_level, cover_state);
-
-		
-		/*正常動作*/
-		design_number(0, 5, ad_temp);
-		design_number(0, 6, temp);
-		design_number(0, 7, water_level);
 		
 	}
 	

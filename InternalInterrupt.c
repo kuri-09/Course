@@ -15,8 +15,6 @@ void isr_adi();
 extern unsigned long int temp;
 extern unsigned long int ad_temp;
 
-
-
 extern int remaining_time;
 extern int cover_state;
 extern unsigned char water_level;
@@ -69,7 +67,7 @@ void isr_imia1(){
 				    }
 				}
 				
-				if(temp >= 100){
+				if(temp >= 100 && water_level != 0x00){
 					
 					DA.DADR0 = 0x00;//出力値の設定
 					HeaterPower_turn_off();
@@ -117,7 +115,6 @@ void isr_imia1(){
 void isr_adi(){
 	
 	ad_temp = (AD.ADDRA >> 6);
-	//temp = (125 * (AD.ADDRA >> 6)) / 1024;
 	
 	//割り込みフラグのクリア
 	if(AD.ADCSR.BIT.ADF != 0){//状態のリード

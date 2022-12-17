@@ -76,7 +76,6 @@ void Manager_interrupt(unsigned char button_state, int water_level, int cover_st
 		//ƒ‰ƒ“ƒv:off
 		Lock_Lamp_turn_off_lamp();
 		locklamp_state = 0;
- 
 	}
 	
 	
