@@ -1,125 +1,263 @@
 /*InternalInterrupt.c*/
 
-/*header読み込み*/
+/* header参照 */
 #include "KettleSystem.h"
-//#include "Manager.h"
+#include "macro.h"
+#include "struct.h"
 
 #include "iodefine.h"
-//#include <machine.h>
 
-/*プロトタイプ宣言*/
+#include <stdio.h>
+
+/* プロトタイプ宣言 */
 void isr_imia1();
+void isr_imia2();
+void isr_imia3();
 void isr_adi();
 
-/*extern宣言*/
-extern unsigned long int temp;
-extern unsigned long int ad_temp;
+/*構造体の宣言*/
+extern SYSTEM_CLASS SYSTEM;
+extern INTERRUPT_CLASS INTERRUPT;
+extern MANAGER_CLASS MANAGER;
+extern ERROR_CLASS ERROR;
 
-extern int remaining_time;
-extern int cover_state;
-extern unsigned char water_level;
-extern unsigned char button_state;
-extern int time_out;
-//int remaining_time = 0;
-
-extern heat heat_state;
-
-//16ビット幅
+//タイマ割り込み
 void isr_imia1(){
 	
 	static int cnt;
-	static btn btn_type;
 	
 	cnt++;
 	
-	//10ms毎に処理を行う
+	/* 10ms */
 	if(cnt%10 == 0){
 		
-		/*タイマ割り込み：時間表示*/
-		RTimeDisp_show_remaining_time(remaining_time);
+		/* タイマ残り時間表示窓に残り時間を表示 */
+		RTimeDisp_show_remaining_time((int)SYSTEM.TIMER.REMAINING_TIME);
 		
+		/* 100ms */
 		if((cnt%100) == 0){
 			
-			//ボタンの状態読み込み
-			button_state = Button_get_botan_state();
+			/* ボタンの状態の取得 */
+			INTERRUPT.INPUT.BUTTON_STATE = Button_get_button_state();
 			
-			//ふたの状態読み込み
-			cover_state = Cover_get_cover_state();
+			/* ふたの状態の取得 */
+			INTERRUPT.INPUT.COVER_STATE = Cover_get_cover_state();
 			
+			
+			/* AD変換の開始 */
+			isr_adi();
+			AD.ADCSR.BIT.ADST = 1;
+			
+			/* DA変換の開始 */			
+			INTERRUPT.FLAG.KEEP.DECIDE_PID_VALUE = HIGH;
+						
+			/* 1000ms */
 			if(cnt == 1000){
 				
-				//水位の状態読み込み
-				water_level = WaterLevel_get_water_level();
-				
-				//AD変換の開始
-				isr_adi();//読み取り
-				AD.ADCSR.BIT.ADST = 1;//変換の開始
-				
-				
-				//DA変換の開始	
-				//沸騰(目標温度 ON/OFF 方式)
-				if(heat_state == boiling){
-					if(temp < 100){
+				/* 水位の取得 */
+				INTERRUPT.INPUT.WATER_LEVEL = WaterLevel_get_water_level();	
 						
-					    DA.DADR0 = 0xff;//出力値の設定
-						HeaterPower_turn_on();
-						
-				    }
-				}
-				
-				if(temp >= 100 && water_level != 0x00){
-					
-					DA.DADR0 = 0x00;//出力値の設定
-					HeaterPower_turn_off();
-					heat_state = off;
-					
-				}
-				
-				//一秒カウント
-				if(remaining_time != 0){
-					remaining_time -= 1;
-					
-					if(remaining_time == 0){
-						time_out = 1;
-					}
-					
-				}
 				cnt = 0;
 			}
 		}
 	}
 	
 	//割り込みフラグのクリア
-	if(ITU1.TSR.BIT.IMFA != 0){//状態のリード
-
+	if(ITU1.TSR.BIT.IMFA != 0){
 		ITU1.TSR.BIT.IMFA = 0;
-
 	}
 }
 
 
-//16ビット幅
-//void isr_imia2(){
+//descaling and kitchen timer
+void isr_imia2(){
 	
-	
-	
-	/*割り込みフラグのクリア*/
-	/*if(ITU2.TSR.BIT.IMFA != 0){//状態のリード
+	static int cnt_KitchenTimer;
+	static int cnt_Descaling;
+	static int second_KitchenTimer;
+	static int second_Descaling;
 
-		ITU2.TSR.BIT.IMFA = 0;
+	/****************************************** kitchen timer ******************************************/
+
+	//KitchenTimer is start
+	if(MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
+
+		cnt_KitchenTimer++;
+
+	}else if(MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == LOW){
+
+		cnt_KitchenTimer = 0;
+		second_KitchenTimer = 0;
 
 	}
-}*/
+	
+	//KitchenTimer is passed 1 second
+	if(cnt_KitchenTimer == 1000){
+		
+		second_KitchenTimer += 1;
 
-/*変換後の数値の読み取り*/
+		if(second_KitchenTimer == 60){
+			
+			if(MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
+				
+				if(SYSTEM.TIMER.REMAINING_TIME != 0){
+					
+					SYSTEM.TIMER.REMAINING_TIME -= 1;
+
+				}
+
+				//KitchenTimer is time out
+				if(SYSTEM.TIMER.REMAINING_TIME == 0 && MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
+					
+					INTERRUPT.FLAG.KITCHEN.TIME_OUT = HIGH;
+				
+				}
+			}
+			second_KitchenTimer = 0;
+		}
+		cnt_KitchenTimer = 0;
+
+		
+	}
+	
+	/****************************************** descaling ******************************************/
+
+	//Descaling is start
+	if(MANAGER.FLAG.BOIL.START_DESCALING == HIGH){
+
+		cnt_Descaling++;
+		
+	}else if(MANAGER.FLAG.BOIL.START_DESCALING == LOW){
+		
+		cnt_Descaling = 0;
+		second_Descaling = 0;
+	}
+
+	//Descaling is passed 1 second
+	if(cnt_Descaling == 1000){
+		
+		second_Descaling += 1;
+
+		if(second_Descaling == 180){
+			
+			if(MANAGER.FLAG.BOIL.START_DESCALING == HIGH){
+				
+				INTERRUPT.FLAG.BOIL.PASSED_THREE_MINUTES = HIGH;
+
+			}
+			second_Descaling = 0;
+		}
+		cnt_Descaling = 0;
+	}
+	
+	/************************************************************************************/
+
+	//割り込みフラグのクリア
+	if(ITU2.TSR.BIT.IMFA != 0){
+		ITU2.TSR.BIT.IMFA = 0;
+	}
+}
+
+//error check
+void isr_imia3(){
+	
+	static int cnt_ErrorCheck;
+	static int cnt_RingBuzzer;
+	static int second_ErrorCheck;
+	static int second_RingBuzzer;
+
+	/****************************************** check erro ******************************************/
+
+	//buzzer is start
+	if(ERROR.FLAG.START_CHECK_ERROR == HIGH){
+
+		cnt_ErrorCheck++;
+
+	}else if(ERROR.FLAG.START_CHECK_ERROR == LOW){
+
+		cnt_ErrorCheck = 0;
+		second_ErrorCheck = 0;
+
+	}
+	
+	//ErrorCheck is passed 1 second
+	if(cnt_ErrorCheck == 1000){
+		
+		second_ErrorCheck += 1;
+
+		if(second_ErrorCheck == 60){
+			
+			if(ERROR.FLAG.START_CHECK_ERROR == HIGH){
+				
+				INTERRUPT.FLAG.ERROR.PASSED_ONE_MINUTE = HIGH;
+			
+			}
+			second_ErrorCheck = 0;
+		}
+		cnt_ErrorCheck = 0;
+	}
+
+	/****************************************** ring buzzer ******************************************/
+
+	//buzzer is start
+	if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH){
+
+		cnt_RingBuzzer++;
+
+	}else{
+
+		cnt_RingBuzzer = 0;
+		second_RingBuzzer = 0;
+
+	}
+	
+	//buzzer is passed 1 second
+	if(cnt_RingBuzzer == 1000){
+		
+		second_RingBuzzer += 1;
+
+		if(second_RingBuzzer == 30){
+			
+			if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH){
+				
+				INTERRUPT.FLAG.ERROR.PASSED_THIRTY_SECONDS = HIGH;
+				
+				ERROR.FLAG.HAPPEN_HIGH_TEMP = LOW;
+				ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT = LOW;
+			
+			}
+			second_RingBuzzer = 0;
+		}
+		cnt_RingBuzzer = 0;
+	}
+
+	/************************************************************************************/
+
+	//割り込みフラグのクリア
+	if(ITU3.TSR.BIT.IMFA != 0){
+		ITU3.TSR.BIT.IMFA = 0;
+	}
+}
+
+/*AD変換（ローパスフィルターによる加工あり）*/
 void isr_adi(){
 	
+	/*static */
+	double ad_temp;
+	
+	INTERRUPT.INPUT.BEFORE_TEMP = INTERRUPT.INPUT.WATER_TEMP;
+	
 	ad_temp = (AD.ADDRA >> 6);
+	ad_temp = (125.0 * ad_temp) /1024.0;
+	ad_temp = (FILTER * INTERRUPT.INPUT.BEFORE_TEMP) + ((1 - FILTER) * ad_temp);
+
+	INTERRUPT.INPUT.WATER_TEMP = ad_temp;
+	INTERRUPT.INPUT.DISPLAY_WATER_TEMP = ad_temp + 0.5;
+	
+	//水温の変化を出力
 	
 	//割り込みフラグのクリア
-	if(AD.ADCSR.BIT.ADF != 0){//状態のリード
-
+	if(AD.ADCSR.BIT.ADF != 0){
 		AD.ADCSR.BIT.ADF = 0;
-
 	}
 }

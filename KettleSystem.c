@@ -1,61 +1,60 @@
 /* KettleSystem.c */
+
+/*0.5・ｽｫゑｿｽ・ｽ・ｽint・ｽﾉ変奇ｿｽ・ｽ・ｽ・ｽl・ｽﾌ五難ｿｽ
+・ｽ・ｽ・ｽb・ｽN・ｽ{・ｽ^・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ・ｽA・ｽd・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ100・ｽ・ｽ・ｽ・ｽ・ｽ・ｽX・ｽ^・ｽ[・ｽg*/
+
 /*※未使用のポートは入力にするのがマナー*/
-/*Eがoffのときは待ち状態であり、onにした瞬間に実行される*/
 /*0が書き、1が読み*/
 
+/*相対参照*/
 #include "iodefine.h"
 
 #include "KettleSystem.h"
+#include "struct.h"
 
+/*絶対参照*/
 #include <stdio.h>
 #include <string.h>
 
-#define SECOND 1000
-
-//グローバル変数
-unsigned long int temp = 0x00;
-unsigned long int ad_temp = 0x00;
-
-//int remaining_time = 0;
-unsigned char water_level = 0x00;
-unsigned char button_state = 0x00;
-int cover_state = 0;
-
-//プロトタイプ宣言
+/*プロトタイプ宣言*/
 void init();
+void init_sci1(unsigned char b_rate);
+void charput(char c);
 
-//保温設定の変更と給湯口の変更（構造体の書き換えが上手くいっていない）
-//ケトルシステムから機能に飛んで、更にその内部の関数に飛んだときに、書き換えられていない
+/*構造体の宣言*/
+SYSTEM_CLASS SYSTEM;
+INTERRUPT_CLASS INTERRUPT;
+MANAGER_CLASS MANAGER;
+ERROR_CLASS ERROR;
 
 int main(void)
 {
 	int i = 0;
-	unsigned int ad = 0;
+	double ad = 0;
 	const unsigned char data[] = "Keita_Igarashi";
 	int data_len = strlen(data);
-	//int test_temp;
+	/*---------*/
+	/*---------*/
 	
-	//初期化
+	//init
 	init();
-	
-	//LCDの初期化
-	reset_lcd();
-	
-	/*数字→文字列変換＋表示*/
-	//design_number(0, 5, 999);
-
-	//LCDに保温モードの出力
-	design_display_mode(98);
-	
+	init_sci1(80);//port：9600 [baud]
 	
 	while(1){
+
+		//タイマ割り込みで取得したデータを使った処理
+		Manager_interrupt(&SYSTEM, &INTERRUPT, &MANAGER);
+
+		//check error
+		Error_check_error(&SYSTEM, &INTERRUPT, &MANAGER, &ERROR);
 		
-		temp = (125 * ad_temp) /1024;
-		design_display_temp(temp);
-		
-		//タイマ割り込みでサンプリングした値を処理する
-		Manager_interrupt(button_state, water_level, cover_state);
-		
+		/*--------------------------------- main ---------------------------------*/
+		BoilFunction_boil(&SYSTEM, &INTERRUPT, &MANAGER);
+		KeepWarmFunction_keep_warm(&SYSTEM, &INTERRUPT, &MANAGER);
+		SupplyWaterFunction_supply_water(&SYSTEM, &INTERRUPT, &MANAGER);
+		KitchenTimerFunction_timer(&SYSTEM, &INTERRUPT, &MANAGER);
+		/*--------------------------------- main ---------------------------------*/
+
 	}
 	
     return 0;
@@ -63,24 +62,51 @@ int main(void)
 
 void init(){
 	
-	//AD変換
-	/*
-	AD.ADCSR.BIT.SCAN = 0;//動作モードの選択(単一)
-	AD.ADCSR.BIT.ADIE = 1;//割り込みの許可
-	AD.ADCSR.BIT.CH = 0x00;//チャンネルの選択
-	*/
+	/* AD変換の為の初期設定 */
 	AD.ADCSR.BYTE = 0x40;
 	
-	//DA変換
-	//ヒータ
-	DA.DADR0 = 0x00;//出力初期値の設定
-	DA.DACR.BIT.DAOE0 = 1;//出力の許可
-	
-	//ポンプ
+	/* DA変換の為の初期設定 */
+	DA.DADR0 = 0x00;
+	DA.DACR.BIT.DAOE0 = 1;
 	DA.DADR1 = 0x00;
 	DA.DACR.BIT.DAOE1 = 1;
 	
-	//ブザー・ヒータ電源
-	P6.DDR = 0xff;//高温エラーなくなる
+	/* ヒータ電源を消灯する */
 	HeaterPower_turn_off();
+
+	/* ブザーイネーブルを消灯 */
+	Buzzer_turn_off_enable();
+	
+	//ポートの設定
+	P4.DDR = 0x00; //input(buttou)
+	P6.DDR = 0xff;//output(buzzer, heaterpower)
+	P9.DDR = 0x00; //input(cover)
+	PA.DDR = 0xff;//output(timerdisplay)
+	PB.DDR = 0xff;//output(lamp, waterlamp)
+
+	/* LCD init */
+	reset_lcd();
+	//design_number(0, 5, 999);
+}
+
+//233
+
+/*to use "printf"*/
+void init_sci1(unsigned char b_rate)
+{
+	int i;
+	SCI1.SCR.BYTE = 0; // ・ｽ・ｽ・ｽ・ｽ・ｽl・ｽ・ｽ 0
+    SCI1.SMR.BYTE = 0; // ・ｽ・ｽ・ｽ・ｽ・ｽl・ｽ・ｽ 0
+	SCI1.BRR = b_rate; // ・ｽr・ｽb・ｽg・ｽ・ｽ・ｽ[・ｽg
+	for (i = 0; i < 4000; i++); // ・ｽﾒゑｿｽ
+	SCI1.SCR.BYTE = 0x70; // ・ｽ・ｽM・ｽ・ｽ・ｽ闕橸ｿｽﾝ具ｿｽ・ｽﾂ，・ｽ・ｽ・ｽ・ｽM・ｽ・ｽ・ｽ・ｽ
+	SCI1.SSR.BYTE; // ・ｽ_・ｽ~・ｽ[・ｽ・ｽ・ｽ[・ｽh
+	SCI1.SSR.BYTE = 0x80; // ・ｽG・ｽ・ｽ・ｽ[・ｽt・ｽ・ｽ・ｽO・ｽN・ｽ・ｽ・ｽA
+}
+
+void charput(char c)
+{
+	while (!SCI1.SSR.BIT.TDRE); // ・ｽ・ｽ・ｽM・ｽ・ｽﾒゑｿｽ
+	SCI1.TDR = c;
+	SCI1.SSR.BIT.TDRE = 0; // TDRE・ｽN・ｽ・ｽ・ｽA
 }

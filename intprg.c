@@ -94,7 +94,12 @@ __interrupt(vect=30) void INT_OVI1(void) {/* sleep(); */}
 //  vector 31 Reserved
 
 //  vector 32 IMIA2
-__interrupt(vect=32) void INT_IMIA2(void) {/* sleep(); */}
+extern void isr_imia2();
+__interrupt(vect=32) void INT_IMIA2(void) {
+	isr_imia2();
+}
+
+
 //  vector 33 IMIB2
 __interrupt(vect=33) void INT_IMIB2(void) {/* sleep(); */}
 //  vector 34 OVI2
@@ -102,7 +107,12 @@ __interrupt(vect=34) void INT_OVI2(void) {/* sleep(); */}
 //  vector 35 Reserved
 
 //  vector 36 IMIA3
-__interrupt(vect=36) void INT_IMIA3(void) {/* sleep(); */}
+extern void isr_imia3();
+__interrupt(vect=36) void INT_IMIA3(void) {
+	isr_imia3();
+}
+
+
 //  vector 37 IMIB3
 __interrupt(vect=37) void INT_IMIB3(void) {/* sleep(); */}
 //  vector 38 OVI3

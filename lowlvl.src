@@ -12,7 +12,7 @@
 
 
 
-         .EXPORT    _charput
+;         .EXPORT    _charput
          .EXPORT    _charget
 
 SIM_IO:  .EQU       H'0000
@@ -21,14 +21,14 @@ SIM_IO:  .EQU       H'0000
 ;-----------------------------------------------------------------------
 ;  _charput:
 ;-----------------------------------------------------------------------
-_charput:
-         MOV.B      R0L,@IO_BUF
-         MOV.W      #H'0112,R0
-         MOV.L      #IO_BUF,ER1
-         MOV.L      ER1,@PARM
-         MOV.L      #PARM,ER1
-         JSR        @SIM_IO
-         RTS
+;_charput:
+;         MOV.B      R0L,@IO_BUF
+;         MOV.W      #H'0112,R0
+;         MOV.L      #IO_BUF,ER1
+;         MOV.L      ER1,@PARM
+;         MOV.L      #PARM,ER1
+;         JSR        @SIM_IO
+;         RTS
 ;-----------------------------------------------------------------------
 ;  _charget:
 ;-----------------------------------------------------------------------

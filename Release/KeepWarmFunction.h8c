@@ -1,0 +1,8 @@
+-cpu=300HA:24
+-lang=c
+-object="C:\WorkSpace\course2\course2\Release\KeepWarmFunction.obj"
+-outcode=sjis
+-nolist
+-chgincpath
+"C:\workspace\course2\course2\KeepWarmFunction.c"
+-nologo

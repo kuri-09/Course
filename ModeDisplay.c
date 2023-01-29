@@ -13,14 +13,7 @@ void design_display_mode(int target_temp)
 	int x = 0;
 	int page = 0;
 	
-	int mode = 0;
-	
-	if(target_temp == 98)
-	    mode = 2;
-	if(target_temp == 90)
-	    mode = 1;
-	if(target_temp == 70)
-	    mode = 0;
+	int mode = target_temp;
 	
 	for(page=5; page<8; page++){
 		for(x=64; x<128; x++){

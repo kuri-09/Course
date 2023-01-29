@@ -124,6 +124,7 @@
 "C:\WorkSpace\course2\course2\lowsrc.c" "User" "C source file" 2 
 "C:\WorkSpace\course2\course2\resetprg.c" "User" "C source file" 2 
 "C:\WorkSpace\course2\course2\sbrk.c" "User" "C source file" 2 
+"C:\workspace\course2\course2\BoilFunction.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\BoilLamp.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\BoilLamp.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\Button.c" "User" "C source file" 2 
@@ -134,14 +135,18 @@
 "C:\workspace\course2\course2\Cover.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\Display.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\Display.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\Error.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\ExternalInterrupt.c" "User" "C source file" 2 
+"C:\workspace\course2\course2\Heater.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\HeaterPower.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\HeaterPower.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\InternalInterrupt.c" "User" "C source file" 2 
+"C:\workspace\course2\course2\KeepWarmFunction.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\KeepWarmLamp.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\KeepWarmLamp.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\KettleSystem.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\KettleSystem.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\KitchenTimerFunction.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\LockLamp.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\LockLamp.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\Manager.c" "User" "C source file" 2 
@@ -152,14 +157,23 @@
 "C:\workspace\course2\course2\Pump.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\RemainingTimeDisplay.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\RemainingTimeDisplay.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\SupplyWaterFunction.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\TempDisplay.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\TempDisplay.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\WaterLevel.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\WaterLevel.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\WaterLevelMeter.c" "User" "C source file" 2 
 "C:\workspace\course2\course2\WaterLevelMeter.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\controll_object.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\data.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\enum.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\extern.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\font.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\function.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\global.h" "User" "C header file" 2 
 "C:\workspace\course2\course2\image.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\macro.h" "User" "C header file" 2 
+"C:\workspace\course2\course2\struct.h" "User" "C header file" 2 
 [FOLDER]
 "Assembly source file" "Assembly source file" 
 "C header file" "C header file" 
@@ -184,28 +198,34 @@
 "C:\WorkSpace\course2\course2\lowsrc.c" "0bfeda2fd9509d10" 2 
 "C:\WorkSpace\course2\course2\resetprg.c" "0bfeda2fd9509d10" 2 
 "C:\WorkSpace\course2\course2\sbrk.c" "0bfeda2fd9509d10" 2 
+"C:\workspace\course2\course2\BoilFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\BoilLamp.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Button.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Buzzer.c" "034e8d930df09d10" 2 
 "C:\workspace\course2\course2\Cover.c" "0d489dc813609d10" 2 
 "C:\workspace\course2\course2\Display.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\Error.c" "08bd8a8db3439d10" 2 
 "C:\workspace\course2\course2\ExternalInterrupt.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\Heater.c" "018c009d59419d10" 2 
 "C:\workspace\course2\course2\HeaterPower.c" "034e8d930df09d10" 2 
 "C:\workspace\course2\course2\InternalInterrupt.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\KeepWarmFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\KeepWarmLamp.c" "06906e23bb509d10" 2 
 "C:\workspace\course2\course2\KettleSystem.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\KitchenTimerFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\LockLamp.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Manager.c" "0a703ec33a509d10" 2 
 "C:\workspace\course2\course2\ModeDisplay.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Pump.c" "06e748875df09d10" 2 
 "C:\workspace\course2\course2\RemainingTimeDisplay.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\SupplyWaterFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\TempDisplay.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\WaterLevel.c" "00e91a4e5a509d10" 2 
 "C:\workspace\course2\course2\WaterLevelMeter.c" "05f7c2f8e9509d10" 2 
 [OPTIONS_Debug_Renesas H8S,H8/300 C/C++ Library Generator]
 "Single Shot" "0bfeda2fd9509d10" 1 
 [OPTIONS_Debug_Renesas OptLinker]
-"Single Shot" "0b2b78875df09d10" 4 
+"Single Shot" "03afca8db3439d10" 4 
 [OPTIONS_Debug]
 "" 0 
 "[S|OUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [V|VERSION|1] [B|RUNTIME|1] [B|NEW|1] [B|CTYPE|0] [B|MATH|0] [B|MATHF|0] [B|STDARG|0] [B|STDIO|1] [B|STDLIB|1] [B|STRING|1] [B|IOS|0] [B|COMPLEX|0] [B|CPPSTRING|0] [B|C99_COMPLEX|0] [B|INTTYPES|0] [B|WCHAR|0] [B|WCTYPE|0] [S|LANG|C] [B|SPEED|0] [S|MODE|BUILD/CHANGED] [S|CPU|300HA:24] [S|STACK|MEDIUM] [I|REGPARAM|2] [B|LONGREG|0] [B|STRUCTREG|0] [B|RTTI|0] [S|BIT_ORDER|LEFT] [B|PACK|0] [B|C89STDIO|0] [B|EXCEPTION|0]" 1 
@@ -228,28 +248,34 @@
 "C:\WorkSpace\course2\course2\lowsrc.c" "0bfeda2fd9509d10" 2 
 "C:\WorkSpace\course2\course2\resetprg.c" "0bfeda2fd9509d10" 2 
 "C:\WorkSpace\course2\course2\sbrk.c" "0bfeda2fd9509d10" 2 
+"C:\workspace\course2\course2\BoilFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\BoilLamp.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Button.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Buzzer.c" "034e8d930df09d10" 2 
 "C:\workspace\course2\course2\Cover.c" "0d489dc813609d10" 2 
 "C:\workspace\course2\course2\Display.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\Error.c" "08bd8a8db3439d10" 2 
 "C:\workspace\course2\course2\ExternalInterrupt.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\Heater.c" "018c009d59419d10" 2 
 "C:\workspace\course2\course2\HeaterPower.c" "034e8d930df09d10" 2 
 "C:\workspace\course2\course2\InternalInterrupt.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\KeepWarmFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\KeepWarmLamp.c" "06906e23bb509d10" 2 
 "C:\workspace\course2\course2\KettleSystem.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\KitchenTimerFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\LockLamp.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Manager.c" "0a703ec33a509d10" 2 
 "C:\workspace\course2\course2\ModeDisplay.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\Pump.c" "06e748875df09d10" 2 
 "C:\workspace\course2\course2\RemainingTimeDisplay.c" "05f7c2f8e9509d10" 2 
+"C:\workspace\course2\course2\SupplyWaterFunction.c" "0fd37b28f0039d10" 2 
 "C:\workspace\course2\course2\TempDisplay.c" "05f7c2f8e9509d10" 2 
 "C:\workspace\course2\course2\WaterLevel.c" "00e91a4e5a509d10" 2 
 "C:\workspace\course2\course2\WaterLevelMeter.c" "05f7c2f8e9509d10" 2 
 [OPTIONS_Release_Renesas H8S,H8/300 C/C++ Library Generator]
 "Single Shot" "0bfeda2fd9509d10" 1 
 [OPTIONS_Release_Renesas OptLinker]
-"Single Shot" "0b2b78875df09d10" 4 
+"Single Shot" "03afca8db3439d10" 4 
 [OPTIONS_Release]
 "" 0 
 "[S|OUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [V|VERSION|1] [B|RUNTIME|1] [B|NEW|1] [B|CTYPE|0] [B|MATH|0] [B|MATHF|0] [B|STDARG|0] [B|STDIO|1] [B|STDLIB|1] [B|STRING|1] [B|IOS|0] [B|COMPLEX|0] [B|CPPSTRING|0] [B|C99_COMPLEX|0] [B|INTTYPES|0] [B|WCHAR|0] [B|WCTYPE|0] [S|LANG|C] [B|SPEED|0] [S|MODE|BUILD/CHANGED] [S|CPU|300HA:24] [S|STACK|MEDIUM] [I|REGPARAM|2] [B|LONGREG|0] [B|STRUCTREG|0] [B|RTTI|0] [S|BIT_ORDER|LEFT] [B|PACK|0] [B|C89STDIO|0] [B|EXCEPTION|0]" 1 

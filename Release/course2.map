@@ -1,4 +1,4 @@
-Optimizing Linkage Editor (V.9.05.01.000)         17-Dec-2022 13:09:25
+Optimizing Linkage Editor (V.9.05.01.000)         30-Jan-2023 01:52:18
 
 *** Options ***
 
@@ -11,19 +11,24 @@ Optimizing Linkage Editor (V.9.05.01.000)         17-Dec-2022 13:09:25
 -nooptimize
 -start=PResetPRG,PIntPRG/0400,P,C,C$DSEC,C$BSEC,D/0800,B,R/0FFDF10,S/0FFFD00
 -nologo
+-input="C:\WorkSpace\course2\course2\Release\BoilFunction.obj"
 -input="C:\WorkSpace\course2\course2\Release\BoilLamp.obj"
 -input="C:\WorkSpace\course2\course2\Release\Button.obj"
 -input="C:\WorkSpace\course2\course2\Release\Buzzer.obj"
 -input="C:\WorkSpace\course2\course2\Release\Cover.obj"
 -input="C:\WorkSpace\course2\course2\Release\dbsct.obj"
 -input="C:\WorkSpace\course2\course2\Release\Display.obj"
+-input="C:\WorkSpace\course2\course2\Release\Error.obj"
 -input="C:\WorkSpace\course2\course2\Release\ExternalInterrupt.obj"
+-input="C:\WorkSpace\course2\course2\Release\Heater.obj"
 -input="C:\WorkSpace\course2\course2\Release\HeaterPower.obj"
 -input="C:\WorkSpace\course2\course2\Release\hwsetup.obj"
 -input="C:\WorkSpace\course2\course2\Release\InternalInterrupt.obj"
 -input="C:\WorkSpace\course2\course2\Release\intprg.obj"
+-input="C:\WorkSpace\course2\course2\Release\KeepWarmFunction.obj"
 -input="C:\WorkSpace\course2\course2\Release\KeepWarmLamp.obj"
 -input="C:\WorkSpace\course2\course2\Release\KettleSystem.obj"
+-input="C:\WorkSpace\course2\course2\Release\KitchenTimerFunction.obj"
 -input="C:\WorkSpace\course2\course2\Release\LockLamp.obj"
 -input="C:\WorkSpace\course2\course2\Release\lowlvl.obj"
 -input="C:\WorkSpace\course2\course2\Release\lowsrc.obj"
@@ -33,6 +38,7 @@ Optimizing Linkage Editor (V.9.05.01.000)         17-Dec-2022 13:09:25
 -input="C:\WorkSpace\course2\course2\Release\RemainingTimeDisplay.obj"
 -input="C:\WorkSpace\course2\course2\Release\resetprg.obj"
 -input="C:\WorkSpace\course2\course2\Release\sbrk.obj"
+-input="C:\WorkSpace\course2\course2\Release\SupplyWaterFunction.obj"
 -input="C:\WorkSpace\course2\course2\Release\TempDisplay.obj"
 -input="C:\WorkSpace\course2\course2\Release\WaterLevel.obj"
 -input="C:\WorkSpace\course2\course2\Release\WaterLevelMeter.obj"
@@ -133,20 +139,20 @@ $VECT60
 PResetPRG
                                   00000400  00000421        22   2
 PIntPRG
-                                  00000422  000004af        8e   2
+                                  00000422  000004d7        b6   2
 P
-                                  00000800  00005a97      5298   2
+                                  00000800  00006919      611a   2
 C
-                                  00005a98  00008d33      329c   2
+                                  0000691a  00009c25      330c   2
 C$DSEC
-                                  00008d34  00008d3f         c   2
+                                  00009c26  00009c31         c   2
 C$BSEC
-                                  00008d40  00008d47         8   2
+                                  00009c32  00009c39         8   2
 D
-                                  00008d48  00008d5d        16   2
+                                  00009c3a  00009c4d        14   2
 B
-                                  00ffdf10  00ffe38f       480   2
+                                  00ffdf10  00ffe3d3       4c4   2
 R
-                                  00ffe390  00ffe3a5        16   2
+                                  00ffe3d4  00ffe3e7        14   2
 S
                                   00fffd00  00fffeff       200   2

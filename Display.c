@@ -31,7 +31,7 @@ void timer_init()
 	ITU0.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/	
 	//なし                    /*5. 割り込みの許可*/
 	
-	//7セグ
+	//7 segment
 	ITU.TSTR.BIT.STR1 = 0;    /*1. タイマカウントの停止*/  
 	ITU1.TCR.BIT.CCLR = 1;    /*2. タイマの利用方法の設定*/	
 	ITU1.TCR.BIT.CKEG = 0;	
@@ -40,14 +40,36 @@ void timer_init()
 	ITU1.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/
 	ITU1.TIER.BIT.IMIEA = 1;  /*5. 割り込みの許可*/
 	
+	//descaling and kitchen timer
+	ITU.TSTR.BIT.STR2 = 0;    /*1. タイマカウントの停止*/  
+	ITU2.TCR.BIT.CCLR = 1;    /*2. タイマの利用方法の設定*/	
+	ITU2.TCR.BIT.CKEG = 0;	
+	ITU2.TCR.BIT.TPSC = 0x03;
+	ITU2.TIOR.BIT.IOA = 0;    /*3. ジェネラルレジスタの利用方法の設定*/		
+	ITU2.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/
+	ITU2.TIER.BIT.IMIEA = 1;  /*5. 割り込みの許可*/
+
+	//error check
+	ITU.TSTR.BIT.STR3= 0;    /*1. タイマカウントの停止*/  
+	ITU3.TCR.BIT.CCLR = 1;    /*2. タイマの利用方法の設定*/	
+	ITU3.TCR.BIT.CKEG = 0;	
+	ITU3.TCR.BIT.TPSC = 0x03;
+	ITU3.TIOR.BIT.IOA = 0;    /*3. ジェネラルレジスタの利用方法の設定*/		
+	ITU3.GRA = 3125;          /*4. ジェネラルレジスタの値の設定*/
+	ITU3.TIER.BIT.IMIEA = 1;  /*5. 割り込みの許可*/
+	
 	//ふた
 	INTC.ISCR.BIT.IRQ4SC = 1; /*1. レベルセンス／立ち下がりの選択*/
-	INTC.IER.BIT.IRQ4E = 1;   /*2. 割り込みの許可*/
+	INTC.IER.BIT.IRQ4E = 1;   /*2. 割り込みの許可*/
+
 	
 	//全割り込みの許可
 	set_imask_ccr(0);
 	
 	ITU.TSTR.BIT.STR1 = 1;    /*6. タイマカウントの開始*/
+	ITU.TSTR.BIT.STR2 = 1;    /*6. タイマカウントの開始*/
+	ITU.TSTR.BIT.STR3 = 1;    /*6. タイマカウントの開始*/
+	
 }
 
 
