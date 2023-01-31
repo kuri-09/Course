@@ -60,7 +60,7 @@ void KeepWarmFunction_keep_warm(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT
             
             }else if(MANAGER->FLAG.KEEP.START_KEEP_WARM == LOW){
                 
-                //power = ((unsigned char)KeepWarmFunction_calculate_power(INTERRUPT->INPUT.BEFORE_TEMP, INTERRUPT->INPUT.WATER_TEMP, target_temp[SYSTEM->KEEP.MODE], MANAGER->FLAG.KEEP.START_KEEP_WARM));
+                power = ((unsigned char)KeepWarmFunction_calculate_power(INTERRUPT->INPUT.BEFORE_TEMP, INTERRUPT->INPUT.WATER_TEMP, target_temp[SYSTEM->KEEP.MODE], MANAGER->FLAG.KEEP.START_KEEP_WARM));
 
             }
             
