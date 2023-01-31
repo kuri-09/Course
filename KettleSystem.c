@@ -43,15 +43,15 @@ int main(void)
 		//check error
 		Error_check_error(&SYSTEM, &INTERRUPT, &MANAGER, &ERROR);
 		
+		if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH)
+		    break;
+		
 		/*--------------------------------- main ---------------------------------*/
 		BoilFunction_boil(&SYSTEM, &INTERRUPT, &MANAGER);
 		KeepWarmFunction_keep_warm(&SYSTEM, &INTERRUPT, &MANAGER);
 		SupplyWaterFunction_supply_water(&SYSTEM, &INTERRUPT, &MANAGER);
 		KitchenTimerFunction_timer(&SYSTEM, &INTERRUPT, &MANAGER);
 		/*--------------------------------- main ---------------------------------*/
-
-		if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH)
-		    break;
 
 	}
 	
