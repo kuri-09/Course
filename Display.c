@@ -5,7 +5,6 @@
 
 #include "font.h"
 #include "image.h"
-#include "display.h"
 
 #define WAIT 300000
 #define ANIME 300000000

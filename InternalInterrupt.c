@@ -32,7 +32,7 @@ void isr_imia1(){
 	if(cnt%10 == 0){
 		
 		/* タイマ残り時間表示窓に残り時間を表示 */
-		RTimeDisp_show_remaining_time((int)SYSTEM.TIMER.REMAINING_TIME);
+		RTimeDisp_show_remaining_time((int)SYSTEM.KITCHEN.REMAINING_TIME);
 		
 		/* 100ms */
 		if((cnt%100) == 0){
@@ -100,14 +100,14 @@ void isr_imia2(){
 			
 			if(MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
 				
-				if(SYSTEM.TIMER.REMAINING_TIME != 0){
+				if(SYSTEM.KITCHEN.REMAINING_TIME != 0){
 					
-					SYSTEM.TIMER.REMAINING_TIME -= 1;
+					SYSTEM.KITCHEN.REMAINING_TIME -= 1;
 
 				}
 
 				//KitchenTimer is time out
-				if(SYSTEM.TIMER.REMAINING_TIME == 0 && MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
+				if(SYSTEM.KITCHEN.REMAINING_TIME == 0 && MANAGER.FLAG.KITCHEN.START_COUNT_DOWN == HIGH){
 					
 					INTERRUPT.FLAG.KITCHEN.TIME_OUT = HIGH;
 				
@@ -221,9 +221,6 @@ void isr_imia3(){
 			if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH){
 				
 				INTERRUPT.FLAG.ERROR.PASSED_THIRTY_SECONDS = HIGH;
-				
-				ERROR.FLAG.HAPPEN_HIGH_TEMP = LOW;
-				ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT = LOW;
 			
 			}
 			second_RingBuzzer = 0;

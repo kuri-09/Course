@@ -27,14 +27,9 @@ INTERRUPT_CLASS INTERRUPT;
 MANAGER_CLASS MANAGER;
 ERROR_CLASS ERROR;
 
+
 int main(void)
 {
-	int i = 0;
-	double ad = 0;
-	const unsigned char data[] = "Keita_Igarashi";
-	int data_len = strlen(data);
-	/*---------*/
-	/*---------*/
 	
 	//init
 	init();
@@ -55,10 +50,14 @@ int main(void)
 		KitchenTimerFunction_timer(&SYSTEM, &INTERRUPT, &MANAGER);
 		/*--------------------------------- main ---------------------------------*/
 
+		if(ERROR.FLAG.HAPPEN_HIGH_TEMP == HIGH || ERROR.FLAG.HAPPEN_UNABLE_TO_HEAT == HIGH)
+		    break;
+
 	}
 	
     return 0;
 }
+
 
 void init(){
 	
@@ -110,3 +109,10 @@ void charput(char c)
 	SCI1.TDR = c;
 	SCI1.SSR.BIT.TDRE = 0; // TDRE・ｽN・ｽ・ｽ・ｽA
 }
+
+/*
+int i = 0;
+double ad = 0;
+const unsigned char data[] = "Keita_Igarashi";
+int data_len = strlen(data);
+*/

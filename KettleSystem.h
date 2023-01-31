@@ -10,12 +10,6 @@
 #include "controll_object.h"
 #include "data.h"
 */
-struct KettleSystem{
-	int boiling_result;
-	int keep_warm_result;
-	int supply_water_state;
-	int kitchen_timer_state;
-};
 
 typedef enum{
 	

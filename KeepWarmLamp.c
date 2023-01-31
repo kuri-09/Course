@@ -1,7 +1,6 @@
 //KeepWarmLamp.c
 
 #include "iodefine.h"
-#include "KeepWarmLamp.h"
 
 void KeepWarmLamp_turn_on_lamp(){
 	

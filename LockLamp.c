@@ -1,7 +1,6 @@
 //LockLamp.c
 
 #include "iodefine.h"
-#include "LockLamp.h"
 
 //ロックランプを点灯させる
 void LockLamp_turn_on_lamp(){

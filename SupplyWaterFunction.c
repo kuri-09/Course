@@ -8,13 +8,13 @@ void SupplyWaterFunction_supply_water(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INT
     //lock or unlock gate
     if(MANAGER->FLAG.SUPPLY.PUSH_LOCK_BUTTON == HIGH && MANAGER->FLAG.SUPPLY.SOUND_BUZZER == HIGH){
 
-        if(SYSTEM->LOCK.GATE_STATE == CLOSE){
+        if(SYSTEM->SUPPLY.GATE_STATE == CLOSE){
 
-            SYSTEM->LOCK.GATE_STATE = OPEN;
+            SYSTEM->SUPPLY.GATE_STATE = OPEN;
 
-        }else if(SYSTEM->LOCK.GATE_STATE == OPEN){
+        }else if(SYSTEM->SUPPLY.GATE_STATE == OPEN){
 
-            SYSTEM->LOCK.GATE_STATE = CLOSE;
+            SYSTEM->SUPPLY.GATE_STATE = CLOSE;
         }
 
         //ring buzzer
@@ -22,14 +22,14 @@ void SupplyWaterFunction_supply_water(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INT
 
     }
 
-    if(SYSTEM->LOCK.GATE_STATE == OPEN){
+    if(SYSTEM->SUPPLY.GATE_STATE == OPEN){
         LockLamp_turn_off_lamp();
-    }else if(SYSTEM->LOCK.GATE_STATE == CLOSE){
+    }else if(SYSTEM->SUPPLY.GATE_STATE == CLOSE){
         LockLamp_turn_on_lamp();
     }
 
     //supply water
-    if(MANAGER->FLAG.SUPPLY.PUSH_SUPPLY_BUTTON == HIGH && SYSTEM->LOCK.GATE_STATE == OPEN && INTERRUPT->INPUT.WATER_LEVEL != EMPTY){
+    if(MANAGER->FLAG.SUPPLY.PUSH_SUPPLY_BUTTON == HIGH && SYSTEM->SUPPLY.GATE_STATE == OPEN && INTERRUPT->INPUT.WATER_LEVEL != EMPTY){
 
         //supply water
         Pump_drain_water();

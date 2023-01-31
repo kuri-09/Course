@@ -13,11 +13,11 @@ typedef struct{
 		
 		struct{
 			unsigned char GATE_STATE;
-		}LOCK;
+		}SUPPLY;
 		
 		struct{
 			unsigned char REMAINING_TIME;
-		}TIMER;
+		}KITCHEN;
 		
 	
 }SYSTEM_CLASS;
@@ -27,11 +27,11 @@ typedef struct{
 		struct{
 			
 			double BEFORE_TEMP;
+			double WATER_TEMP;
+			int DISPLAY_WATER_TEMP;
 			unsigned char COVER_STATE;
 			unsigned char BUTTON_STATE;
 			unsigned char WATER_LEVEL;
-			double WATER_TEMP;
-			int DISPLAY_WATER_TEMP;
 		
 		}INPUT;
 
@@ -104,6 +104,8 @@ typedef struct{
 }MANAGER_CLASS;
 
 typedef struct{
+
+	double TEMP_BEFORE_ONE_MINUTE;
 	
 	struct{
 

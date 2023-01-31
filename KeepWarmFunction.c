@@ -36,10 +36,6 @@ void KeepWarmFunction_keep_warm(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT
 
         power = 0x00;
 
-        //set lamp state
-        BoilLamp_turn_off_lamp();
-        KeepWarmLamp_turn_off_lamp();
-
         if(INTERRUPT->INPUT.WATER_TEMP < target_temp[SYSTEM->KEEP.MODE]){
 
             MANAGER->HEATER = PID;
@@ -55,10 +51,6 @@ void KeepWarmFunction_keep_warm(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT
     //PID control
     if(MANAGER->HEATER == PID){
 
-        //set lamp state
-        BoilLamp_turn_off_lamp();
-        KeepWarmLamp_turn_on_lamp();
-
         if(INTERRUPT->FLAG.KEEP.DECIDE_PID_VALUE == HIGH){
             
             if(MANAGER->FLAG.KEEP.START_KEEP_WARM == HIGH){
@@ -68,7 +60,7 @@ void KeepWarmFunction_keep_warm(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT
             
             }else if(MANAGER->FLAG.KEEP.START_KEEP_WARM == LOW){
                 
-                power = ((unsigned char)KeepWarmFunction_calculate_power(INTERRUPT->INPUT.BEFORE_TEMP, INTERRUPT->INPUT.WATER_TEMP, target_temp[SYSTEM->KEEP.MODE], MANAGER->FLAG.KEEP.START_KEEP_WARM));
+                //power = ((unsigned char)KeepWarmFunction_calculate_power(INTERRUPT->INPUT.BEFORE_TEMP, INTERRUPT->INPUT.WATER_TEMP, target_temp[SYSTEM->KEEP.MODE], MANAGER->FLAG.KEEP.START_KEEP_WARM));
 
             }
             

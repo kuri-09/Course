@@ -1,7 +1,6 @@
 ////BoilLamp.c
 
 #include "iodefine.h"
-#include "BoilLamp.h"
 
 //•¦“«ƒ‰ƒ“ƒv‚ð“_“”‚³‚¹‚é
 void BoilLamp_turn_on_lamp(){

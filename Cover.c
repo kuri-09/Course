@@ -1,9 +1,6 @@
 //Cover.c
 
 #include "iodefine.h"
-#include "Cover.h"
-
-#include <machine.h>
 
 int Cover_get_cover_state(){
 	

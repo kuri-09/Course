@@ -1,9 +1,6 @@
 //Button.c
 
 #include "iodefine.h"
-#include "Button.h"
-
-#include <machine.h>
 
 int Button_get_button_state(){
 	

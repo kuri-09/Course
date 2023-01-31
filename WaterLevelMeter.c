@@ -1,7 +1,6 @@
 //WaterLevelMeter.c
 
 #include "iodefine.h"
-#include "WaterLevelMeter.h"
 
 void WaterLevelMeter_show_water_level(unsigned char display_water_level/*, unsigned char pb_state*/){
 

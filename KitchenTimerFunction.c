@@ -1,6 +1,5 @@
 /*KitchenTimerFunction*/
 #include "KettleSystem.h"
-#include "extern.h"
 #include "macro.h"
 #include "struct.h"
 

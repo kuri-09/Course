@@ -1,7 +1,6 @@
 /*Manager.c*/
 
 #include "KettleSystem.h"
-#include "extern.h"
 #include "struct.h"
 
 #include "iodefine.h"
@@ -66,9 +65,9 @@ void Manager_interrupt(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT, MANAGER
 	//push timer button
 	if((INTERRUPT->INPUT.BUTTON_STATE & 0x08) == TIMER && MANAGER->FLAG.KITCHEN.PUSH_TIMER_BUTTON == LOW){
 
-		if(SYSTEM->TIMER.REMAINING_TIME != 60){
+		if(SYSTEM->KITCHEN.REMAINING_TIME != 60){
 		    
-			SYSTEM->TIMER.REMAINING_TIME += 1;
+			SYSTEM->KITCHEN.REMAINING_TIME += 1;
 			MANAGER->FLAG.KITCHEN.PUSH_TIMER_BUTTON = HIGH;
 			MANAGER->FLAG.KITCHEN.SOUND_BUZZER = HIGH;
 

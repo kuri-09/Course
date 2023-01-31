@@ -47,7 +47,7 @@ void Error_check_error(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT, MANAGER
 
             if(MANAGER->HEATER == BOILING || MANAGER->HEATER == DESCALING){
 
-                if(INTERRUPT->INPUT.BEFORE_TEMP > INTERRUPT->INPUT.WATER_TEMP && 100 >= (INTERRUPT->INPUT.WATER_TEMP + 5.0)){
+                if(ERROR->TEMP_BEFORE_ONE_MINUTE > INTERRUPT->INPUT.WATER_TEMP && 100 >= (INTERRUPT->INPUT.WATER_TEMP + 5.0)){
                 
                     ERROR->FLAG.HAPPEN_UNABLE_TO_HEAT = HIGH;
                     
@@ -69,7 +69,7 @@ void Error_check_error(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT, MANAGER
 
             }else if(MANAGER->HEATER == COOL || MANAGER->HEATER == PID){
 
-                if(INTERRUPT->INPUT.BEFORE_TEMP > INTERRUPT->INPUT.WATER_TEMP && target_temp[SYSTEM->KEEP.MODE] >= (INTERRUPT->INPUT.WATER_TEMP + 5.0)){
+                if(ERROR->TEMP_BEFORE_ONE_MINUTE > INTERRUPT->INPUT.WATER_TEMP && target_temp[SYSTEM->KEEP.MODE] >= (INTERRUPT->INPUT.WATER_TEMP + 5.0)){
                     
                     ERROR->FLAG.HAPPEN_UNABLE_TO_HEAT = HIGH;
                     
@@ -90,6 +90,8 @@ void Error_check_error(SYSTEM_CLASS *SYSTEM, INTERRUPT_CLASS *INTERRUPT, MANAGER
                 }
                 
             }
+
+            ERROR->TEMP_BEFORE_ONE_MINUTE = INTERRUPT->INPUT.WATER_TEMP;
 
         }
 

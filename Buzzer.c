@@ -1,6 +1,5 @@
 //Buzzer.c
 #include "iodefine.h"
-#include "Buzzer.h"
 
 void Buzzer_turn_on(){
 	P6.DR.BIT.B5 = 1;
